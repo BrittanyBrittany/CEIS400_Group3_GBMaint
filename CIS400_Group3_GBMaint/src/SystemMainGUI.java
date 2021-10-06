@@ -1,12 +1,18 @@
+
+import java.awt.Font;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -26,6 +32,8 @@ import javax.swing.JOptionPane;
  */
 public class SystemMainGUI extends javax.swing.JFrame {
 
+    DefaultListModel<Employee> empList = new DefaultListModel();
+
     /**
      * Creates new form PickingGUI
      */
@@ -34,7 +42,9 @@ public class SystemMainGUI extends javax.swing.JFrame {
         //center the form
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(new java.awt.Color(204, 230, 255));
+        fillInTheBlanks();
         //loadOrders();
+
     }
 
     /**
@@ -47,7 +57,7 @@ public class SystemMainGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        buttonGroup1 = new javax.swing.ButtonGroup();
+        btgOrderDelivTp = new javax.swing.ButtonGroup();
         tbpnMainTabs = new javax.swing.JTabbedPane();
         pnlHome = new javax.swing.JPanel();
         jLabel22 = new javax.swing.JLabel();
@@ -123,7 +133,7 @@ public class SystemMainGUI extends javax.swing.JFrame {
         cmbEmpCreator = new javax.swing.JComboBox<>();
         lblInstructions1 = new javax.swing.JLabel();
         lblName = new javax.swing.JLabel();
-        txtName = new javax.swing.JTextField();
+        txtNameL = new javax.swing.JTextField();
         lblAddress = new javax.swing.JLabel();
         txtAddress = new javax.swing.JTextField();
         lblAddress2 = new javax.swing.JLabel();
@@ -159,15 +169,16 @@ public class SystemMainGUI extends javax.swing.JFrame {
         jScrollPane7 = new javax.swing.JScrollPane();
         txaEmpSummary = new javax.swing.JTextArea();
         btnAddEmp = new javax.swing.JButton();
+        txtNameF = new javax.swing.JTextField();
         pnlMaintEmp = new javax.swing.JPanel();
-        btnSubmit1 = new javax.swing.JButton();
-        btnSubmit2 = new javax.swing.JButton();
-        btnSubmit3 = new javax.swing.JButton();
+        btnUpdateEmpRcd = new javax.swing.JButton();
+        btnDispEmpDtl = new javax.swing.JButton();
+        btnTerminateEmp = new javax.swing.JButton();
         jScrollPane9 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        tblMaintEmp = new javax.swing.JTable();
         lblOrderSummary1 = new javax.swing.JLabel();
         jScrollPane10 = new javax.swing.JScrollPane();
-        jTextArea5 = new javax.swing.JTextArea();
+        txaEmpDetails = new javax.swing.JTextArea();
         lblOrderSummary2 = new javax.swing.JLabel();
         pnlMaintEmpMetric = new javax.swing.JPanel();
         jLabel30 = new javax.swing.JLabel();
@@ -576,7 +587,7 @@ public class SystemMainGUI extends javax.swing.JFrame {
         jLabel23.setText("Welcome!");
 
         jLabel25.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
-        jLabel25.setText("<html>I'm Working On \"Add Employee\"<br>\nTestable Now: <br>\n-All Entry fields On \"Employee Maintenance>Add Employee\"<br>\n-Button \"Verify\"<br>\nWorking on Next, feel free to try on your own:<br>\n-Reset Button<br>\n-Add write to text file<br>\n<html>");
+        jLabel25.setText("<html>Brian is Working On \"Materials\"<br>\nBrittany is Working On \"Order functions\"<br>\nTestable Now: <br>\n-Employee Maintenance>Add Employee & Maintain Employee<br>\n---Button \"Update\" Does Not Work(Not Required)<br>\nWorking on Next:<br>\n-OrderIO &DBs<br>\n-Employee Metrics(how many orders were placed)<br>\n<html>");
 
         javax.swing.GroupLayout pnlHomeLayout = new javax.swing.GroupLayout(pnlHome);
         pnlHome.setLayout(pnlHomeLayout);
@@ -628,20 +639,22 @@ public class SystemMainGUI extends javax.swing.JFrame {
         jLabel6.setText("Line #");
 
         jComboBox1.setFont(new java.awt.Font("MS UI Gothic", 0, 36)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Vinny G.", "Frank V.", "Ricky P.", "Alex V.", "C.J. R.", "Nick S.", "Tony O." }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Maintenance Emp" }));
 
         jComboBox2.setFont(new java.awt.Font("MS UI Gothic", 0, 36)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "  ", "Main Campus", "Central Office", "West Wing", "East Wing" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Main Campus", "Central Office", "Warehouse 01", "Warehouse 02" }));
 
         jComboBox3.setFont(new java.awt.Font("MS UI Gothic", 0, 36)); // NOI18N
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Today", "Tomorrow", "Next Week", "Whenever's Clever" }));
 
+        btgOrderDelivTp.add(jRadioButton1);
         jRadioButton1.setFont(new java.awt.Font("MS UI Gothic", 0, 36)); // NOI18N
         jRadioButton1.setText("Will Call");
 
         jTextField1.setFont(new java.awt.Font("MS UI Gothic", 0, 36)); // NOI18N
         jTextField1.setToolTipText("");
 
+        btgOrderDelivTp.add(jRadioButton3);
         jRadioButton3.setFont(new java.awt.Font("MS UI Gothic", 0, 36)); // NOI18N
         jRadioButton3.setText("Delivery");
 
@@ -669,7 +682,7 @@ public class SystemMainGUI extends javax.swing.JFrame {
         jLabel12.setText("1");
 
         jComboBox4.setFont(new java.awt.Font("MS UI Gothic", 0, 36)); // NOI18N
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Equipment", "Materials", "From Vendor// if Warehouse Only", " " }));
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Equipment", "Materials", "From Vendor// if Warehouse Only", " " }));
 
         jComboBox5.setFont(new java.awt.Font("MS UI Gothic", 0, 36)); // NOI18N
         jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Hand Tools", "Power Tools", "Testing Equipment", "Hardware", "Accessories", "Impements of Mass Destruction" }));
@@ -1096,10 +1109,11 @@ public class SystemMainGUI extends javax.swing.JFrame {
         lblName.setFont(new java.awt.Font("Candara", 0, 30)); // NOI18N
         lblName.setText("Name:");
 
-        txtName.setFont(new java.awt.Font("Candara", 0, 30)); // NOI18N
-        txtName.setFocusCycleRoot(true);
-        txtName.setNextFocusableComponent(txtAddress);
-        txtName.setSelectionColor(new java.awt.Color(0, 153, 51));
+        txtNameL.setFont(new java.awt.Font("Candara", 0, 30)); // NOI18N
+        txtNameL.setText("Last");
+        txtNameL.setFocusCycleRoot(true);
+        txtNameL.setNextFocusableComponent(txtAddress);
+        txtNameL.setSelectionColor(new java.awt.Color(0, 153, 51));
 
         lblAddress.setFont(new java.awt.Font("Candara", 0, 30)); // NOI18N
         lblAddress.setText("Address:");
@@ -1169,14 +1183,14 @@ public class SystemMainGUI extends javax.swing.JFrame {
         lblDept.setText("Area:");
 
         cmbDept.setFont(new java.awt.Font("Candara", 0, 30)); // NOI18N
-        cmbDept.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Maintenance Dept", "Equipment Depot", "Warehouse 01", "Warehouse 02" }));
+        cmbDept.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Maintenance Dept", "Equipment Depot", "Warehouse 01", "Warehouse 02", "Administration" }));
         cmbDept.setPreferredSize(new java.awt.Dimension(95, 60));
 
         lblRole.setFont(new java.awt.Font("Candara", 0, 30)); // NOI18N
         lblRole.setText("Role:");
 
         cmbRole.setFont(new java.awt.Font("Candara", 0, 30)); // NOI18N
-        cmbRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Employee", "Driver", "Leader", "Supervisor", "Manager" }));
+        cmbRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Employee", "Driver", "Leader", "Supervisor", "Manager", "Administrator" }));
         cmbRole.setPreferredSize(new java.awt.Dimension(95, 60));
 
         lblSkill.setFont(new java.awt.Font("Candara", 0, 30)); // NOI18N
@@ -1242,6 +1256,12 @@ public class SystemMainGUI extends javax.swing.JFrame {
             }
         });
 
+        txtNameF.setFont(new java.awt.Font("Candara", 0, 30)); // NOI18N
+        txtNameF.setText("First");
+        txtNameF.setFocusCycleRoot(true);
+        txtNameF.setNextFocusableComponent(txtNameL);
+        txtNameF.setSelectionColor(new java.awt.Color(0, 153, 51));
+
         javax.swing.GroupLayout pnlAddEmpLayout = new javax.swing.GroupLayout(pnlAddEmp);
         pnlAddEmp.setLayout(pnlAddEmpLayout);
         pnlAddEmpLayout.setHorizontalGroup(
@@ -1283,8 +1303,11 @@ public class SystemMainGUI extends javax.swing.JFrame {
                                                         .addComponent(lblZip, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                         .addComponent(txtZip, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                    .addComponent(txtName)
-                                                    .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 759, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 759, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGroup(pnlAddEmpLayout.createSequentialGroup()
+                                                        .addComponent(txtNameF, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(txtNameL)))
                                                 .addGroup(pnlAddEmpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlAddEmpLayout.createSequentialGroup()
                                                         .addComponent(cmbSkill, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1340,8 +1363,9 @@ public class SystemMainGUI extends javax.swing.JFrame {
                 .addGroup(pnlAddEmpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(pnlAddEmpLayout.createSequentialGroup()
                         .addGroup(pnlAddEmpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtNameL, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNameF, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlAddEmpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1398,27 +1422,40 @@ public class SystemMainGUI extends javax.swing.JFrame {
                         .addComponent(btnAddEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnEmpVerify, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnEmpReset, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         tbpnEmp.addTab("Add Employee", pnlAddEmp);
 
-        btnSubmit1.setBackground(new java.awt.Color(170, 213, 255));
-        btnSubmit1.setFont(new java.awt.Font("Candara", 1, 48)); // NOI18N
-        btnSubmit1.setText("Update Record");
-        btnSubmit1.setToolTipText("The \"Go\" Button");
+        pnlMaintEmp.setBackground(new java.awt.Color(170, 213, 255));
 
-        btnSubmit2.setBackground(new java.awt.Color(170, 213, 255));
-        btnSubmit2.setFont(new java.awt.Font("Candara", 1, 48)); // NOI18N
-        btnSubmit2.setText("Display Details");
-        btnSubmit2.setToolTipText("");
+        btnUpdateEmpRcd.setBackground(new java.awt.Color(170, 213, 255));
+        btnUpdateEmpRcd.setFont(new java.awt.Font("Candara", 1, 48)); // NOI18N
+        btnUpdateEmpRcd.setText("Update Record");
+        btnUpdateEmpRcd.setToolTipText("This is not required... if you want it to work ill get to it later.");
 
-        btnSubmit3.setBackground(new java.awt.Color(170, 213, 255));
-        btnSubmit3.setFont(new java.awt.Font("Candara", 1, 48)); // NOI18N
-        btnSubmit3.setText("Terminate Employee");
-        btnSubmit3.setToolTipText("The \"Kill\" Button");
+        btnDispEmpDtl.setBackground(new java.awt.Color(170, 213, 255));
+        btnDispEmpDtl.setFont(new java.awt.Font("Candara", 1, 48)); // NOI18N
+        btnDispEmpDtl.setText("Display Details");
+        btnDispEmpDtl.setToolTipText("");
+        btnDispEmpDtl.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDispEmpDtlActionPerformed(evt);
+            }
+        });
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        btnTerminateEmp.setBackground(new java.awt.Color(170, 213, 255));
+        btnTerminateEmp.setFont(new java.awt.Font("Candara", 1, 48)); // NOI18N
+        btnTerminateEmp.setText("Terminate Employee");
+        btnTerminateEmp.setToolTipText("The \"Kill\" Button");
+        btnTerminateEmp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTerminateEmpActionPerformed(evt);
+            }
+        });
+
+        tblMaintEmp.setFont(new java.awt.Font("Tahoma", 0, 32)); // NOI18N
+        tblMaintEmp.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -1429,15 +1466,22 @@ public class SystemMainGUI extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane9.setViewportView(jTable3);
+        tblMaintEmp.setRowHeight(34);
+        tblMaintEmp.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblMaintEmpMouseClicked(evt);
+            }
+        });
+        jScrollPane9.setViewportView(tblMaintEmp);
 
         lblOrderSummary1.setFont(new java.awt.Font("Candara", 0, 36)); // NOI18N
         lblOrderSummary1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblOrderSummary1.setText("Employee List:");
 
-        jTextArea5.setColumns(20);
-        jTextArea5.setRows(5);
-        jScrollPane10.setViewportView(jTextArea5);
+        txaEmpDetails.setColumns(20);
+        txaEmpDetails.setFont(new java.awt.Font("Monospaced", 0, 30)); // NOI18N
+        txaEmpDetails.setRows(5);
+        jScrollPane10.setViewportView(txaEmpDetails);
 
         lblOrderSummary2.setFont(new java.awt.Font("Candara", 0, 36)); // NOI18N
         lblOrderSummary2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -1451,9 +1495,9 @@ public class SystemMainGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlMaintEmpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlMaintEmpLayout.createSequentialGroup()
-                        .addComponent(btnSubmit2, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnDispEmpDtl, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(314, 314, 314)
-                        .addComponent(btnSubmit1, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnUpdateEmpRcd, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlMaintEmpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(lblOrderSummary1, javax.swing.GroupLayout.PREFERRED_SIZE, 642, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(pnlMaintEmpLayout.createSequentialGroup()
@@ -1464,7 +1508,7 @@ public class SystemMainGUI extends javax.swing.JFrame {
                     .addComponent(lblOrderSummary2, javax.swing.GroupLayout.PREFERRED_SIZE, 642, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 820, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMaintEmpLayout.createSequentialGroup()
-                        .addComponent(btnSubmit3, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnTerminateEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(139, 139, 139)))
                 .addGap(40, 40, 40))
         );
@@ -1481,9 +1525,9 @@ public class SystemMainGUI extends javax.swing.JFrame {
                     .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 717, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
                 .addGroup(pnlMaintEmpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSubmit2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSubmit1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSubmit3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnDispEmpDtl, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUpdateEmpRcd, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTerminateEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -4194,14 +4238,14 @@ public class SystemMainGUI extends javax.swing.JFrame {
             pnlWhseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlWhseLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 2195, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 2195, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnlWhseLayout.setVerticalGroup(
             pnlWhseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlWhseLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1120, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1120, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -4414,9 +4458,7 @@ public class SystemMainGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEmpResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmpResetActionPerformed
-        // TODO add your handling code here:
         clearEmployeeForm();
-
     }//GEN-LAST:event_btnEmpResetActionPerformed
 
     private void btnEmpVerifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmpVerifyActionPerformed
@@ -4430,15 +4472,41 @@ public class SystemMainGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEmpVerifyActionPerformed
 
     private void btnAddEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEmpActionPerformed
-        //Write to file or add employee to DB
-       createEmpRecord();
-     
+        createEmpRecord();
+        txaEmpDetails.setText("");
     }//GEN-LAST:event_btnAddEmpActionPerformed
 
     private void mniAddEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniAddEmpActionPerformed
         tbpnMainTabs.setSelectedIndex(4);
         tbpnEmp.setSelectedIndex(0);
     }//GEN-LAST:event_mniAddEmpActionPerformed
+
+    private void btnDispEmpDtlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDispEmpDtlActionPerformed
+        maintEmpDispDetails();
+    }//GEN-LAST:event_btnDispEmpDtlActionPerformed
+
+    private void btnTerminateEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTerminateEmpActionPerformed
+        if (txaEmpDetails.getText().isEmpty()) {
+            int index = tblMaintEmp.getSelectedRow();
+            if (index > -1) {
+                Employee empT = empList.getElementAt(index);
+                if (JOptionPane.showConfirmDialog(null, "Do you wish to terminate this employee? \n" + empT.getDetails() + "", "Are you sure?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    terminateEmployee();
+                } else {
+                    return;
+                }
+            }
+        } else {
+            terminateEmployee();
+        }
+        txaEmpDetails.setText("");
+        loadCreators();
+        loadEmployees();
+    }//GEN-LAST:event_btnTerminateEmpActionPerformed
+
+    private void tblMaintEmpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMaintEmpMouseClicked
+        txaEmpDetails.setText("");
+    }//GEN-LAST:event_tblMaintEmpMouseClicked
 
     /**
      * @param args the command line arguments
@@ -4477,14 +4545,15 @@ public class SystemMainGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup btgOrderDelivTp;
     private javax.swing.JButton btnAddEmp;
     private javax.swing.JButton btnCalc1;
     private javax.swing.JButton btnCutOrdMatch;
+    private javax.swing.JButton btnDispEmpDtl;
     private javax.swing.JButton btnEmpReset;
     private javax.swing.JButton btnEmpVerify;
     private javax.swing.JButton btnEquipRtn;
     private javax.swing.JButton btnPickingWiz;
-    private javax.swing.JButton btnSubmit1;
     private javax.swing.JButton btnSubmit10;
     private javax.swing.JButton btnSubmit11;
     private javax.swing.JButton btnSubmit12;
@@ -4494,16 +4563,15 @@ public class SystemMainGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnSubmit16;
     private javax.swing.JButton btnSubmit17;
     private javax.swing.JButton btnSubmit18;
-    private javax.swing.JButton btnSubmit2;
-    private javax.swing.JButton btnSubmit3;
     private javax.swing.JButton btnSubmit4;
     private javax.swing.JButton btnSubmit5;
     private javax.swing.JButton btnSubmit6;
     private javax.swing.JButton btnSubmit7;
     private javax.swing.JButton btnSubmit8;
     private javax.swing.JButton btnSubmit9;
+    private javax.swing.JButton btnTerminateEmp;
+    private javax.swing.JButton btnUpdateEmpRcd;
     private javax.swing.JButton btnWillCall;
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JCheckBox chkSMSNotify;
     private javax.swing.JComboBox<String> cmbDept;
     private javax.swing.JComboBox<String> cmbEmpCreator;
@@ -4809,7 +4877,6 @@ public class SystemMainGUI extends javax.swing.JFrame {
     private javax.swing.JTable jTable12;
     private javax.swing.JTable jTable13;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
     private javax.swing.JTable jTable5;
     private javax.swing.JTable jTable6;
@@ -4820,7 +4887,6 @@ public class SystemMainGUI extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextArea jTextArea3;
     private javax.swing.JTextArea jTextArea4;
-    private javax.swing.JTextArea jTextArea5;
     private javax.swing.JTextArea jTextArea6;
     private javax.swing.JTextArea jTextArea8;
     private javax.swing.JTextField jTextField1;
@@ -4947,8 +5013,10 @@ public class SystemMainGUI extends javax.swing.JFrame {
     private javax.swing.JPanel pnlProductivity;
     private javax.swing.JPanel pnlWhse;
     private javax.swing.JPanel pnlWhseEmpMetric;
+    private javax.swing.JTable tblMaintEmp;
     private javax.swing.JTabbedPane tbpnEmp;
     private javax.swing.JTabbedPane tbpnMainTabs;
+    private javax.swing.JTextArea txaEmpDetails;
     private javax.swing.JTextArea txaEmpSummary;
     private javax.swing.JTextArea txaOrderSummary1;
     private javax.swing.JTextField txtAddress;
@@ -4965,7 +5033,8 @@ public class SystemMainGUI extends javax.swing.JFrame {
     private javax.swing.JTextField txtCity9;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtEmpNotes;
-    private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtNameF;
+    private javax.swing.JTextField txtNameL;
     private javax.swing.JTextField txtPhoneNum3;
     private javax.swing.JTextField txtPhoneNum4;
     private javax.swing.JTextField txtUnit1;
@@ -4983,18 +5052,42 @@ public class SystemMainGUI extends javax.swing.JFrame {
     private javax.swing.JTextField txtZip9;
     // End of variables declaration//GEN-END:variables
 
+    private void fillInTheBlanks() {
+        loadCreators();
+        loadEmployees();
+        loadMaintEmployeeComboBoxes();
+        loadWhseEmployeeComboBoxes();
+    }
+
     private void loadOrders() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     private void clearEmployeeForm() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        cmbEmpCreator.setSelectedIndex(0);
+        txtNameF.setText("First");
+        txtNameL.setText("Last");
+        txtAddress.setText("");
+        txtCity.setText("");
+        txtEmail.setText("");
+        cmbST.setSelectedIndex(0);
+        txtZip.setText("");
+        txtAreaCode.setText("");
+        txtPhoneNum3.setText("");
+        txtPhoneNum4.setText("");
+        txtEmpNotes.setText("");
+        cmbDept.setSelectedIndex(0);
+        cmbRole.setSelectedIndex(0);
+        cmbSuperv.setSelectedIndex(0);
+        cmbSkill.setSelectedIndex(0);
 
+        txaEmpSummary.setText("");
+    }
 
     private boolean validateInputs() {
         String sCreatedBy = cmbEmpCreator.getSelectedItem().toString();
-        String sName = txtName.getText();
+        String sNameF = txtNameF.getText();
+        String sNameL = txtNameL.getText();
         String sAddress = txtAddress.getText();
         String sCity = txtCity.getText();
         String sState = cmbST.getSelectedItem().toString();
@@ -5014,10 +5107,17 @@ public class SystemMainGUI extends javax.swing.JFrame {
             return false;
         }
 
-        if (sName.equals("")) {
+        if (sNameF.equals("")) {
             JOptionPane.showMessageDialog(this, "Enter a Name",
                     "Name Error", JOptionPane.ERROR_MESSAGE);
-            txtName.requestFocusInWindow();
+            txtNameF.requestFocusInWindow();
+            return false;
+        }
+
+        if (sNameL.equals("")) {
+            JOptionPane.showMessageDialog(this, "Enter a Name",
+                    "Name Error", JOptionPane.ERROR_MESSAGE);
+            txtNameL.requestFocusInWindow();
             return false;
         }
 
@@ -5174,28 +5274,28 @@ public class SystemMainGUI extends javax.swing.JFrame {
             cmbRole.requestFocusInWindow();
             return false;
         }
-        
+
         if (sSkillLvl.equals(" ")) {
             JOptionPane.showMessageDialog(this, "Select Skill Level",
                     "Skill Error", JOptionPane.ERROR_MESSAGE);
             cmbSkill.requestFocusInWindow();
             return false;
-        } 
+        }
 
         if (sEmpSupervisor.equals(" ")) {
             JOptionPane.showMessageDialog(this, "Assign a Supervisor",
                     "Supervisor Error", JOptionPane.ERROR_MESSAGE);
             cmbSuperv.requestFocusInWindow();
             return false;
-        }else {
+        } else {
             // all is good so return true
             return true;
         }
     }
 
     private Employee createEmployee() {
-        String empName = txtName.getText();
-        String empLastName = txtName.getText();
+        String empName = txtNameF.getText();
+        String empLastName = txtNameL.getText();
         String address = txtAddress.getText();
         String address2 = txtAddress2.getText();
         String city = txtCity.getText();
@@ -5209,32 +5309,35 @@ public class SystemMainGUI extends javax.swing.JFrame {
         String empdeptType = cmbDept.getSelectedItem().toString();
         String empRole = cmbRole.getSelectedItem().toString();
         String empSupervisor = cmbSuperv.getSelectedItem().toString();
-        int skillLvl = Integer.parseInt((String)cmbSkill.getSelectedItem());
+        int skillLvl = Integer.parseInt((String) cmbSkill.getSelectedItem());
         String empStatus = "A";
         String empCreatedBy = cmbEmpCreator.getSelectedItem().toString();
         String empUpdateDT = "2021-10-03 07:12";
         String empUpdateBy = "N/A";
         String empCreateDT = "2021-10-03 07:11";
         int empSeq = 0;
-        
 
-        Employee emp = new Employee (0, empName, empLastName, address, address2, city, state, postalCode, 
-                email, areaCode, phoneNum3, phoneNum4, empNotes, empdeptType, empRole, 
+        Employee emp = new Employee(0, empName, empLastName, address, address2, city, state, postalCode,
+                email, areaCode, phoneNum3, phoneNum4, empNotes, empdeptType, empRole,
                 empSupervisor, skillLvl, empStatus, empUpdateDT, empUpdateBy, empCreateDT, empCreatedBy, empSeq);
+
         return emp;
     }
 
     private void createEmpRecord() {
         if (validateInputs() == false) {
             return;    // end the method if validation failed
+        } else if (txaEmpSummary.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Verify");
+            return;
         }
         Employee emp = createEmployee();
-        
+        empList.addElement(emp);
+
         try {
             EmployeeIO data = new EmployeeIO();
             data.add(emp);
             JOptionPane.showMessageDialog(this, "Emp added to DB");
-            
         } catch (ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(this, "Error. ClassNotFound Catch.Database driver not found.", "Driver Not Found", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, ex);
@@ -5242,5 +5345,165 @@ public class SystemMainGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error. SQL Catch." + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, ex);
         }
+        clearEmployeeForm();
+        loadCreators();
+        loadEmployees();
     }
+
+    private void loadCreators() {
+        // for emp role == supervisor, manager, admin set cmb creator "firstname of emp" && Lastname length=1 +"."
+        //I was too lazy to add the last name.
+        DefaultComboBoxModel cmbModelC = new DefaultComboBoxModel();
+        DefaultComboBoxModel cmbModelS = new DefaultComboBoxModel();
+        DefaultComboBoxModel cmbModel22 = new DefaultComboBoxModel();
+        cmbEmpCreator.setModel(cmbModelC);
+        cmbSuperv.setModel(cmbModelS);
+        jComboBox22.setModel(cmbModel22);
+        jComboBox23.setModel(cmbModel22);
+        EmployeeIO creator = new EmployeeIO();
+        try {
+            //db.getAll() Returns an array list. We must first have a reference to receive the Array and then format it
+            ArrayList<Employee> creatorList = creator.allowedCreators();
+            empList.clear();
+
+            for (int i = 0; i < creatorList.size(); i++) {
+                Employee emp = creatorList.get(i);
+                empList.addElement(creatorList.get(i));
+                String nombre = emp.getEmpName();
+                cmbModelC.addElement(nombre);
+                cmbModelS.addElement(nombre);
+                cmbModel22.addElement(nombre);
+            }
+            cmbModelC.addElement("Admin");
+            cmbModelS.addElement("Supervisor");
+
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, "Error. ClassNotFound Catch @loadCreator() creator.allowedCreators().Database driver not found.", "Driver Not Found", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(SystemMainGUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error. SQL Catch @loadCreator() creator.allowedCreators()." + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(SystemMainGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    private void loadEmployees() {
+        JTableHeader thead = tblMaintEmp.getTableHeader();
+        thead.setFont(new Font("Arial", Font.BOLD, 36));
+        DefaultTableModel tblModel = new DefaultTableModel();
+        tblMaintEmp.setModel(tblModel);
+        String[] colTitles = {"First Name", "Last Name", "Department", "Role", "Skill Level", "Supervisor", "Active/Terminated"};
+        tblModel.setColumnIdentifiers(colTitles);
+        EmployeeIO allEmp = new EmployeeIO();
+        try {
+            //db.getAll() Returns an array list. We must first have a reference to receive the Array and then format it
+            ArrayList<Employee> allEmpList = allEmp.allEmployees();
+            empList.clear();
+
+            for (int i = 0; i < allEmpList.size(); i++) {
+                Employee emp = allEmpList.get(i);
+                empList.addElement(allEmpList.get(i));
+                Object[] row = {emp.getEmpName(), emp.getEmpLastName(), emp.getEmpdeptType(), emp.getEmpRole(), emp.getSkillLvl(), emp.getEmpSupervisor(), emp.getEmpStatus()};
+                tblModel.addRow(row);
+            }
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, "Error. ClassNotFound Catch @loadEmployees() allEmp.allEmployees().Database driver not found.", "Driver Not Found", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(SystemMainGUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error. SQL Catch @loadEmployees() allEmp.allEmployees()." + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(SystemMainGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void maintEmpDispDetails() {
+        txaEmpDetails.setText("");
+        int ipsum = tblMaintEmp.getSelectedRow();
+        if (ipsum > -1) {
+            Employee emp = empList.getElementAt(ipsum);
+            txaEmpDetails.setText(emp.getDetails());
+            txaEmpDetails.append("Employment Status: " + emp.getEmpStatus() + "\n");
+            txaEmpDetails.append("Number of tools in Posession:" + "Dont forget to GET TOOLS FROM EQUIPIO DB.");
+        }
+    }
+
+    private void terminateEmployee() {
+        int index = tblMaintEmp.getSelectedRow();
+        if (index > -1) {
+            Employee empT = empList.getElementAt(index);
+            try {
+                if (empT != null) {
+                    EmployeeIO terminator = new EmployeeIO();
+                    terminator.terminate(empT.getEmployeeID());
+                    JOptionPane.showMessageDialog(this, "Employee Terminated");
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Database Error @SystemMainGUI>terminateEmployee()>terminator.terminate()", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Error", "Couldn't find selected row", JOptionPane.ERROR_MESSAGE);
+        } //loadEmployees();
+    }
+
+    private void loadMaintEmployeeComboBoxes() {
+        //JOptionPane.showMessageDialog(this, "Retrieving Maintenance Employee Names ...");
+        DefaultComboBoxModel cmbModelM = new DefaultComboBoxModel();
+        DefaultComboBoxModel cmbModelMA = new DefaultComboBoxModel();
+        jComboBox1.setModel(cmbModelM);
+        jComboBox7.setModel(cmbModelM);
+        jComboBox8.setModel(cmbModelM);
+        jComboBox40.setModel(cmbModelM);
+        jComboBox43.setModel(cmbModelM);
+        jComboBox11.setModel(cmbModelMA);
+
+        EmployeeIO maintEmpsOnly = new EmployeeIO();
+        try {
+            List<String> maintNames = maintEmpsOnly.maintEmps();
+
+            for (int i = 0; i < maintNames.size(); i++) {
+                cmbModelM.addElement(maintNames.get(i));
+                cmbModelMA.addElement(maintNames.get(i));
+            }
+            cmbModelM.addElement("Maintenance Emp");
+            cmbModelMA.addElement("All");
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, "Error. ClassNotFound Catch @loadCreator() creator.allowedCreators().Database driver not found.", "Driver Not Found", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(SystemMainGUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error. SQL Catch @loadCreator() creator.allowedCreators()." + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(SystemMainGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void loadWhseEmployeeComboBoxes() {
+        //JOptionPane.showMessageDialog(this, "Retrieving Warehouse Employee Names ...");
+        DefaultComboBoxModel cmbModelW = new DefaultComboBoxModel();
+        DefaultComboBoxModel cmbModelWA = new DefaultComboBoxModel();
+        jComboBox24.setModel(cmbModelW);
+        jComboBox36.setModel(cmbModelW);
+        jComboBox32.setModel(cmbModelW);
+        jComboBox34.setModel(cmbModelW);
+        jComboBox35.setModel(cmbModelW);
+        jComboBox39.setModel(cmbModelW);
+        jComboBox44.setModel(cmbModelW);
+        jComboBox12.setModel(cmbModelWA);
+
+        EmployeeIO whseEmpsOnly = new EmployeeIO();
+        try {
+            List<String> whseNames = whseEmpsOnly.whseEmps();
+
+            for (int i = 0; i < whseNames.size(); i++) {
+                cmbModelW.addElement(whseNames.get(i));
+                cmbModelWA.addElement(whseNames.get(i));
+            }
+            cmbModelW.addElement("Warehouse Emp");
+            cmbModelWA.addElement("All");
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, "Error. ClassNotFound Catch @loadCreator() creator.allowedCreators().Database driver not found.", "Driver Not Found", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(SystemMainGUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error. SQL Catch @loadCreator() creator.allowedCreators()." + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(SystemMainGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }

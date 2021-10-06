@@ -17,7 +17,7 @@
         </DimensionLayout>
       </Layout>
     </Container>
-    <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
+    <Component class="javax.swing.ButtonGroup" name="btgOrderDelivTp">
     </Component>
     <Menu class="javax.swing.JMenuBar" name="mnuMainMenu">
       <Properties>
@@ -368,7 +368,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="48" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="&lt;html&gt;I&apos;m Working On &quot;Add Employee&quot;&lt;br&gt;&#xa;Testable Now: &lt;br&gt;&#xa;-All Entry fields On &quot;Employee Maintenance&gt;Add Employee&quot;&lt;br&gt;&#xa;-Button &quot;Verify&quot;&lt;br&gt;&#xa;Working on Next, feel free to try on your own:&lt;br&gt;&#xa;-Reset Button&lt;br&gt;&#xa;-Add write to text file&lt;br&gt;&#xa;&lt;html&gt;"/>
+                <Property name="text" type="java.lang.String" value="&lt;html&gt;Brian is Working On &quot;Materials&quot;&lt;br&gt;&#xa;Brittany is Working On &quot;Order functions&quot;&lt;br&gt;&#xa;Testable Now: &lt;br&gt;&#xa;-Employee Maintenance&gt;Add Employee &amp; Maintain Employee&lt;br&gt;&#xa;---Button &quot;Update&quot; Does Not Work(Not Required)&lt;br&gt;&#xa;Working on Next:&lt;br&gt;&#xa;-OrderIO &amp;DBs&lt;br&gt;&#xa;-Employee Metrics(how many orders were placed)&lt;br&gt;&#xa;&lt;html&gt;"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -623,15 +623,9 @@
                   <Font name="MS UI Gothic" size="36" style="0"/>
                 </Property>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="8">
+                  <StringArray count="2">
                     <StringItem index="0" value=" "/>
-                    <StringItem index="1" value="Vinny G."/>
-                    <StringItem index="2" value="Frank V."/>
-                    <StringItem index="3" value="Ricky P."/>
-                    <StringItem index="4" value="Alex V."/>
-                    <StringItem index="5" value="C.J. R."/>
-                    <StringItem index="6" value="Nick S."/>
-                    <StringItem index="7" value="Tony O."/>
+                    <StringItem index="1" value="Maintenance Emp"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -646,11 +640,11 @@
                 </Property>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="5">
-                    <StringItem index="0" value="  "/>
+                    <StringItem index="0" value=" "/>
                     <StringItem index="1" value="Main Campus"/>
                     <StringItem index="2" value="Central Office"/>
-                    <StringItem index="3" value="West Wing"/>
-                    <StringItem index="4" value="East Wing"/>
+                    <StringItem index="3" value="Warehouse 01"/>
+                    <StringItem index="4" value="Warehouse 02"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -679,6 +673,9 @@
             </Component>
             <Component class="javax.swing.JRadioButton" name="jRadioButton1">
               <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="btgOrderDelivTp"/>
+                </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="MS UI Gothic" size="36" style="0"/>
                 </Property>
@@ -695,6 +692,9 @@
             </Component>
             <Component class="javax.swing.JRadioButton" name="jRadioButton3">
               <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="btgOrderDelivTp"/>
+                </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="MS UI Gothic" size="36" style="0"/>
                 </Property>
@@ -765,11 +765,12 @@
                   <Font name="MS UI Gothic" size="36" style="0"/>
                 </Property>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
-                    <StringItem index="0" value="Equipment"/>
-                    <StringItem index="1" value="Materials"/>
-                    <StringItem index="2" value="From Vendor// if Warehouse Only"/>
-                    <StringItem index="3" value=" "/>
+                  <StringArray count="5">
+                    <StringItem index="0" value=" "/>
+                    <StringItem index="1" value="Equipment"/>
+                    <StringItem index="2" value="Materials"/>
+                    <StringItem index="3" value="From Vendor// if Warehouse Only"/>
+                    <StringItem index="4" value=" "/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -1456,8 +1457,12 @@
                                                                       <EmptySpace max="-2" attributes="0"/>
                                                                       <Component id="txtZip" min="-2" pref="177" max="-2" attributes="0"/>
                                                                   </Group>
-                                                                  <Component id="txtName" max="32767" attributes="0"/>
                                                                   <Component id="txtAddress" alignment="0" min="-2" pref="759" max="-2" attributes="0"/>
+                                                                  <Group type="102" alignment="0" attributes="0">
+                                                                      <Component id="txtNameF" min="-2" pref="299" max="-2" attributes="0"/>
+                                                                      <EmptySpace max="-2" attributes="0"/>
+                                                                      <Component id="txtNameL" max="32767" attributes="0"/>
+                                                                  </Group>
                                                               </Group>
                                                               <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                                                                   <Group type="102" alignment="0" attributes="0">
@@ -1533,8 +1538,9 @@
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="txtName" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
+                                          <Component id="txtNameL" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
                                           <Component id="lblName" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
+                                          <Component id="txtNameF" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
@@ -1607,7 +1613,7 @@
                                   </Group>
                                   <Component id="btnEmpReset" alignment="0" min="-2" pref="83" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="40" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1656,11 +1662,12 @@
                         <Property name="text" type="java.lang.String" value="Name:"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtName">
+                    <Component class="javax.swing.JTextField" name="txtNameL">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Candara" size="30" style="0"/>
                         </Property>
+                        <Property name="text" type="java.lang.String" value="Last"/>
                         <Property name="focusCycleRoot" type="boolean" value="true"/>
                         <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
                           <ComponentRef name="txtAddress"/>
@@ -1930,12 +1937,13 @@
                           <Font name="Candara" size="30" style="0"/>
                         </Property>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="5">
+                          <StringArray count="6">
                             <StringItem index="0" value=" "/>
                             <StringItem index="1" value="Maintenance Dept"/>
                             <StringItem index="2" value="Equipment Depot"/>
                             <StringItem index="3" value="Warehouse 01"/>
                             <StringItem index="4" value="Warehouse 02"/>
+                            <StringItem index="5" value="Administration"/>
                           </StringArray>
                         </Property>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -1960,13 +1968,14 @@
                           <Font name="Candara" size="30" style="0"/>
                         </Property>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="6">
+                          <StringArray count="7">
                             <StringItem index="0" value=" "/>
                             <StringItem index="1" value="Employee"/>
                             <StringItem index="2" value="Driver"/>
                             <StringItem index="3" value="Leader"/>
                             <StringItem index="4" value="Supervisor"/>
                             <StringItem index="5" value="Manager"/>
+                            <StringItem index="6" value="Administrator"/>
                           </StringArray>
                         </Property>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -2127,9 +2136,29 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddEmpActionPerformed"/>
                       </Events>
                     </Component>
+                    <Component class="javax.swing.JTextField" name="txtNameF">
+                      <Properties>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Candara" size="30" style="0"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="First"/>
+                        <Property name="focusCycleRoot" type="boolean" value="true"/>
+                        <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+                          <ComponentRef name="txtNameL"/>
+                        </Property>
+                        <Property name="selectionColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="33" green="99" red="0" type="rgb"/>
+                        </Property>
+                      </Properties>
+                    </Component>
                   </SubComponents>
                 </Container>
                 <Container class="javax.swing.JPanel" name="pnlMaintEmp">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="d5" red="aa" type="rgb"/>
+                    </Property>
+                  </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                       <JTabbedPaneConstraints tabName="Maintain Employees">
@@ -2145,9 +2174,9 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Component id="btnSubmit2" min="-2" pref="406" max="-2" attributes="0"/>
+                                      <Component id="btnDispEmpDtl" min="-2" pref="406" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="314" max="-2" attributes="0"/>
-                                      <Component id="btnSubmit1" min="-2" pref="406" max="-2" attributes="0"/>
+                                      <Component id="btnUpdateEmpRcd" min="-2" pref="406" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="lblOrderSummary1" min="-2" pref="642" max="-2" attributes="0"/>
@@ -2162,7 +2191,7 @@
                                   <Component id="lblOrderSummary2" min="-2" pref="642" max="-2" attributes="0"/>
                                   <Component id="jScrollPane10" min="-2" pref="820" max="-2" attributes="0"/>
                                   <Group type="102" alignment="1" attributes="0">
-                                      <Component id="btnSubmit3" min="-2" pref="483" max="-2" attributes="0"/>
+                                      <Component id="btnTerminateEmp" min="-2" pref="483" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="139" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -2185,9 +2214,9 @@
                               </Group>
                               <EmptySpace pref="124" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="btnSubmit2" alignment="3" min="-2" pref="83" max="-2" attributes="0"/>
-                                  <Component id="btnSubmit1" alignment="3" min="-2" pref="83" max="-2" attributes="0"/>
-                                  <Component id="btnSubmit3" alignment="3" min="-2" pref="83" max="-2" attributes="0"/>
+                                  <Component id="btnDispEmpDtl" alignment="3" min="-2" pref="83" max="-2" attributes="0"/>
+                                  <Component id="btnUpdateEmpRcd" alignment="3" min="-2" pref="83" max="-2" attributes="0"/>
+                                  <Component id="btnTerminateEmp" alignment="3" min="-2" pref="83" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
@@ -2195,7 +2224,7 @@
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JButton" name="btnSubmit1">
+                    <Component class="javax.swing.JButton" name="btnUpdateEmpRcd">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="d5" red="aa" type="rgb"/>
@@ -2204,10 +2233,10 @@
                           <Font name="Candara" size="48" style="1"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Update Record"/>
-                        <Property name="toolTipText" type="java.lang.String" value="The &quot;Go&quot; Button"/>
+                        <Property name="toolTipText" type="java.lang.String" value="This is not required... if you want it to work ill get to it later."/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JButton" name="btnSubmit2">
+                    <Component class="javax.swing.JButton" name="btnDispEmpDtl">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="d5" red="aa" type="rgb"/>
@@ -2218,8 +2247,11 @@
                         <Property name="text" type="java.lang.String" value="Display Details"/>
                         <Property name="toolTipText" type="java.lang.String" value=""/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDispEmpDtlActionPerformed"/>
+                      </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="btnSubmit3">
+                    <Component class="javax.swing.JButton" name="btnTerminateEmp">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="d5" red="aa" type="rgb"/>
@@ -2230,6 +2262,9 @@
                         <Property name="text" type="java.lang.String" value="Terminate Employee"/>
                         <Property name="toolTipText" type="java.lang.String" value="The &quot;Kill&quot; Button"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTerminateEmpActionPerformed"/>
+                      </Events>
                     </Component>
                     <Container class="javax.swing.JScrollPane" name="jScrollPane9">
                       <AuxValues>
@@ -2238,8 +2273,11 @@
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JTable" name="jTable3">
+                        <Component class="javax.swing.JTable" name="tblMaintEmp">
                           <Properties>
+                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                              <Font name="Tahoma" size="32" style="0"/>
+                            </Property>
                             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                               <Table columnCount="4" rowCount="4">
                                 <Column editable="true" title="Title 1" type="java.lang.Object"/>
@@ -2248,7 +2286,11 @@
                                 <Column editable="true" title="Title 4" type="java.lang.Object"/>
                               </Table>
                             </Property>
+                            <Property name="rowHeight" type="int" value="34"/>
                           </Properties>
+                          <Events>
+                            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblMaintEmpMouseClicked"/>
+                          </Events>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -2268,9 +2310,12 @@
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JTextArea" name="jTextArea5">
+                        <Component class="javax.swing.JTextArea" name="txaEmpDetails">
                           <Properties>
                             <Property name="columns" type="int" value="20"/>
+                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                              <Font name="Monospaced" size="30" style="0"/>
+                            </Property>
                             <Property name="rows" type="int" value="5"/>
                           </Properties>
                         </Component>

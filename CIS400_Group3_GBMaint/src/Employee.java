@@ -40,7 +40,7 @@ public class Employee {
     public Employee() {
         employeeID = 0;
         empName = "N/A";
-        empLastName = "N/A"
+        empLastName = "N/A";
         address = "N/A";
         address2 = "N/A";
         city = "N/A";
@@ -99,7 +99,7 @@ public class Employee {
     
     public String getDetails( )
     {
-        String output = empName + empLastName + "\n";
+        String output = empName + " " + empLastName + "\n";
         output += address;
         if(!address2.isEmpty()){
         output += "\n " + address2;}        
